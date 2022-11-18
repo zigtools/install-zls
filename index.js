@@ -133,12 +133,152 @@ let g:ycm_language_server =
             }
         },
         "nvim-lspconfig": {
+            official: false,
+            features: {},
+            install: {
+                text: `
+Requires Nvim 0.5 (HEAD)!
 
+- Install nvim-lspconfig from [here](https://github.com/neovim/nvim-lspconfig).
+- Install zig.vim from [here](https://github.com/ziglang/zig.vim).
+
+nvim-lspconfig already ships a configuration for zls. A simple \`init.vim\` might look like this:
+\`\`\`vim
+call plug#begin('~/.config/nvim/plugged')
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'ziglang/zig.vim'
+call plug#end()
+:lua << EOF
+    local lspconfig = require('lspconfig')
+    local on_attach = function(_, bufnr)
+        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+        require('completion').on_attach()
+    end
+    local servers = {'zls'}
+    for _, lsp in ipairs(servers) do
+        lspconfig[lsp].setup {
+            on_attach = on_attach,
+        }
+    end
+EOF
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+" Enable completions as you type
+let g:completion_enable_auto_popup = 1
+\`\`\`
+                `
+            }
         },
         "LanguageClient-neovim": {
+            official: false,
+            features: {},
+            install: {
+                text: `
+- Install the LanguageClient-neovim from [here](https://github.com/autozimu/LanguageClient-neovim).
+- Edit your neovim configuration and add \`zls\` for zig filetypes:
 
+\`\`\`vim
+let g:LanguageClient_serverCommands = {
+        \\ 'zig': ['~/code/zls/zig-out/bin/zls'],
+        \\ }
+\`\`\`
+                `
+            }
         },
     },
+    "Kate": {
+        official: false,
+        features: {},
+        install: {
+            text: `
+- Install language support for Zig from [here](https://github.com/ziglang/kde-syntax-highlighting).
+- Enable \`LSP client\` plugin in Kate settings.
+- Add this snippet to \`LSP client's\` user settings (e.g. \`/$HOME/.config/kate/lspclient\`)
+    (or paste it in \`LSP client's\` GUI settings)
+
+\`\`\`json
+{
+    "servers": {
+        "zig": {
+            "command": ["zls"],
+            "url": "https://github.com/zigtools/zls",
+            "highlightingModeRegex": "^Zig$"
+        }
+    }
+}
+\`\`\`
+            `
+        }
+    },
+    Emacs: {
+        official: false,
+        features: {},
+        install: {
+            text: `
+- Install [lsp-mode](https://github.com/emacs-lsp/lsp-mode) from melpa.
+- [zig mode](https://github.com/ziglang/zig-mode) is also useful.
+
+\`\`\`elisp
+;; Setup lsp-mode as desired.
+;; See https://emacs-lsp.github.io/lsp-mode/page/installation/ for more information.
+(require 'lsp-mode)
+;; Either place zls in your PATH or add the following:
+(setq lsp-zig-zls-executable "<path to zls>")
+\`\`\`
+            `
+        }
+    },
+    "Doom Emacs": {
+        official: false,
+        features: {},
+        install: {
+            text: `
+- Enable the \`lsp\` module.
+- Install the [zig-mode](https://github.com/ziglang/zig-mode) package (add \`(package! zig-mode)\` to your \`packages.el\` file.
+- Add the following to your \`config.el\`:
+
+\`\`\`elisp
+(use-package! zig-mode
+  :hook ((zig-mode . lsp-deferred))
+  :custom (zig-format-on-save nil)
+  :config
+  (after! lsp-mode
+    (add-to-list 'lsp-language-id-configuration '(zig-mode . "zig"))
+    (lsp-register-client
+      (make-lsp-client
+        :new-connection (lsp-stdio-connection "<path to zls>")
+        :major-modes '(zig-mode)
+        :server-id 'zls))))
+\`\`\`
+            `
+        }
+    },
+    "Spacemacs": {
+        official: false,
+        features: {},
+        install: {
+            text: `
+- Add \`lsp\` and \`zig\` to \`dotspacemacs-configuration-layers\` in your \`.spacemacs\` file.
+- If you don't have \`zls\` in your \`PATH\`, add the following to \`dotspacemacs/user-config\` in your
+  \`.spacemacs\` file:
+
+\`\`\`elisp
+(setq lsp-zig-zls-executable "<path to zls>")
+\`\`\`
+            `
+        }
+    },
+    "Helix": {
+        official: false,
+        features: {},
+        install: {
+            text: `
+- Just add \`zls\` to your \`PATH\`.
+- run \`hx --health\` to check if helix found \`zls\`.
+            `
+        }
+    }
 }
 
 const editors_elem = document.querySelector(".main__slots>*:nth-child(2)");
