@@ -285,13 +285,13 @@ let g:LanguageClient_serverCommands = {
         "Binaries": {
             _: "Which binaries would you like?",
             "Latest (Recommended)": {
-                official: true,
-                features: {},
-                install: {
-                    text: `
-To install the latest build artifacts, click on the (hopefully) green checkmark on the latest master commit, then on \`Details\`, then on \`Summary\`. Finally, scroll down and click on \`builds\` - this'll contain all the release binaries our CI builds. 
-                    `,
-                }
+                _: "What platform are you on?",
+                "x86 Linux": "https://zig.pm/zls/downloads/x86-linux/bin/zls",
+                "x86 Windows": "https://zig.pm/zls/downloads/x86-windows/bin/zls.exe",
+                "x86-64 Linux": "https://zig.pm/zls/downloads/x86_64-linux/bin/zls",
+                "x86-64 Macos": "https://zig.pm/zls/downloads/x86_64-macos/bin/zls",
+                "x86-64 Windows": "https://zig.pm/zls/downloads/x86_64-windows/bin/zls.exe",
+                "ARM64 MacOS": "https://zig.pm/zls/downloads/aarch64-macos/bin/zls",
             },
             "Release": {
                 official: true,
@@ -299,19 +299,17 @@ To install the latest build artifacts, click on the (hopefully) green checkmark 
                 install: {
                     text: `
 Just head to the [\`Releases\`](https://github.com/zigtools/zls/releases) tab and select the right executable in the \`Assets\` section at the bottom of the latest release.
+
+To \`untar\` the release artifact, simply install \`zstd\` with your package manager of choice or other means, and then:
+
+\`\`\`bash
+tar --use-compress-program unzstd -x --strip-components=1 -f [archive] [output_path]
+\`\`\`
                     `,
                 }
             }
         },
-        "From Source": {
-            official: true,
-            features: {},
-            install: {
-                text: `
-[See the \`From Source\` README section](https://github.com/zigtools/zls/blob/master/README.md#from-source).
-                `,
-            }
-        }
+        "From Source": "https://github.com/zigtools/zls#from-source"
     }
 }
 
@@ -375,10 +373,17 @@ document.addEventListener("click", event => {
 
             for (const editor in datum) {
                 if (editor === "_") continue;
-                const editor_elem = document.createElement("span");
-                editor_elem.setAttribute("data-name", `${dn}.${editor}`);
-                editor_elem.innerText = editor;
-                sub_elem.appendChild(editor_elem);
+                if (typeof datum[editor] === "string") {
+                    const editor_elem = document.createElement("a");
+                    editor_elem.setAttribute("href", datum[editor]);
+                    editor_elem.innerText = editor;
+                    sub_elem.appendChild(editor_elem);
+                } else {
+                    const editor_elem = document.createElement("span");
+                    editor_elem.setAttribute("data-name", `${dn}.${editor}`);
+                    editor_elem.innerText = editor;
+                    sub_elem.appendChild(editor_elem);
+                }
             }
 
             document.querySelector(".main__slots").appendChild(sub_elem);
