@@ -25,6 +25,7 @@ const data = {
     "Visual Studio Code": {
         official: true,
         features: {
+            auto_installer: true,
             auto_updater: true,
             in_editor_configuration: true,
         },
