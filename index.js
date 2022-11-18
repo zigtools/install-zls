@@ -278,6 +278,39 @@ let g:LanguageClient_serverCommands = {
 - run \`hx --health\` to check if helix found \`zls\`.
             `
         }
+    },
+    "Other": {
+        _: "How would you like to get zls?",
+        "Binaries": {
+            _: "Which binaries would you like?",
+            "Latest (Recommended)": {
+                official: true,
+                features: {},
+                install: {
+                    text: `
+To install the latest build artifacts, click on the (hopefully) green checkmark on the latest master commit, then on \`Details\`, then on \`Summary\`. Finally, scroll down and click on \`builds\` - this'll contain all the release binaries our CI builds. 
+                    `,
+                }
+            },
+            "Release": {
+                official: true,
+                features: {},
+                install: {
+                    text: `
+Just head to the [\`Releases\`](https://github.com/zigtools/zls/releases) tab and select the right executable in the \`Assets\` section at the bottom of the latest release.
+                    `,
+                }
+            }
+        },
+        "From Source": {
+            official: true,
+            features: {},
+            install: {
+                text: `
+[See the \`From Source\` README section](https://github.com/zigtools/zls/blob/master/README.md#from-source).
+                `,
+            }
+        }
     }
 }
 
