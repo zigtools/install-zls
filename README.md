@@ -1,6 +1,8 @@
 # install-zls
 
-Extremely WIP, *please* don't use this yet!!!!
+Use this handy tool to install zls!
+
+https://zigtools.github.io/install-zls/
 
 ## Styles
 
