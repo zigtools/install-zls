@@ -1,5 +1,3 @@
-// vscode:extension/AugusteRame.zls-vscode
-
 async function loadInstructions(path) {
     const res = await fetch(`/instructions/${path}`);
     const text = await res.text();
@@ -31,7 +29,7 @@ const data = {
         },
         install: {
             text: `
-To install ZLS for VSCode, simply [install the ZLS for VSCode extension](vscode:extension/AugusteRame.zls-vscode) ([or open in browser](https://marketplace.visualstudio.com/items?itemName=AugusteRame.zls-vscode)).
+Using ZLS in Visual Studio Code is as simple as [installing the official Zig Language extension](vscode:extension/ziglang.vscode-zig) ([or open in browser](https://marketplace.visualstudio.com/items?itemName=ziglang.vscode-zig)).
 `,
         }
     },
@@ -319,10 +317,14 @@ for (const editor in data) {
     const editor_elem = document.createElement("span");
     editor_elem.setAttribute("data-name", editor);
     editor_elem.innerText = titleCase(editor);
+
+    editor_elem.tabIndex = 0;
+    editor_elem.ariaLabel = `I'm using editor ${titleCase(editor)}`;
+
     editors_elem.appendChild(editor_elem);
 }
 
-document.addEventListener("click", event => {
+const handleNav = event => {
     const ssl = event.target.closest(".single-select-list>*");
     if (ssl) {
         document.querySelector(".main__instructions_header").innerHTML = "";
@@ -352,17 +354,6 @@ document.addEventListener("click", event => {
             }
 
             document.querySelector(".info__install").innerHTML = converter.makeHtml(datum.install.text);
-
-            // if (datum.install?.links) {
-            //     const links_elem = document.querySelector(".info__links");
-
-            //     for (const link of datum.install?.links) {
-            //         const link_elem = document.createElement("a");
-            //         link_elem.href = link.href;
-            //         link_elem.innerHTML = link.text;
-            //         links_elem.appendChild(link_elem);
-            //     }
-            // }
         } else {
             const header_elem = document.createElement("h2");
             header_elem.innerText = datum._;
@@ -382,6 +373,10 @@ document.addEventListener("click", event => {
                     const editor_elem = document.createElement("span");
                     editor_elem.setAttribute("data-name", `${dn}.${editor}`);
                     editor_elem.innerText = editor;
+
+                    editor_elem.tabIndex = 0;
+                    editor_elem.ariaLabel = `Option ${editor}`;
+                    
                     sub_elem.appendChild(editor_elem);
                 }
             }
@@ -389,4 +384,10 @@ document.addEventListener("click", event => {
             document.querySelector(".main__slots").appendChild(sub_elem);
         }
     }
+};
+
+document.addEventListener("click", handleNav);
+document.addEventListener("keypress", event => {
+    if (event.key === "Enter")
+        handleNav(event);
 });
