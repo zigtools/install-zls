@@ -289,7 +289,8 @@ let g:LanguageClient_serverCommands = {
                 "x86-64 Linux": "https://zig.pm/zls/downloads/x86_64-linux/bin/zls",
                 "x86-64 Macos": "https://zig.pm/zls/downloads/x86_64-macos/bin/zls",
                 "x86-64 Windows": "https://zig.pm/zls/downloads/x86_64-windows/bin/zls.exe",
-                "ARM64 MacOS": "https://zig.pm/zls/downloads/aarch64-macos/bin/zls",
+                "AArch64 MacOS": "https://zig.pm/zls/downloads/aarch64-macos/bin/zls",
+                "AArch64 Linux": "https://zig.pm/zls/downloads/aarch64-linux/bin/zls",
             },
             "Release": {
                 official: true,
