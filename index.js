@@ -80,7 +80,7 @@ Using ZLS in Visual Studio Code is as simple as [installing the official Zig Lan
             Extension: {
                 official: false,
                 features: {
-                    auto_updater: false,
+                    auto_updater: true,
                     auto_installer: true,
                     in_editor_configuration: true,
                 },
