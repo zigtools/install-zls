@@ -233,23 +233,9 @@ let g:LanguageClient_serverCommands = {
         features: {},
         install: {
             text: `
-- Enable the \`lsp\` module.
-- Install the [zig-mode](https://github.com/ziglang/zig-mode) package (add \`(package! zig-mode)\` to your \`packages.el\` file.
-- Add the following to your \`config.el\`:
-
-\`\`\`elisp
-(use-package! zig-mode
-  :hook ((zig-mode . lsp-deferred))
-  :custom (zig-format-on-save nil)
-  :config
-  (after! lsp-mode
-    (add-to-list 'lsp-language-id-configuration '(zig-mode . "zig"))
-    (lsp-register-client
-      (make-lsp-client
-        :new-connection (lsp-stdio-connection "<path to zls>")
-        :major-modes '(zig-mode)
-        :server-id 'zls))))
-\`\`\`
+- Enable \`:tool lsp\` module.
+- Enable \`:lang (zig +lsp)\` module.
+- Run \`doom sync\` in a terminal.
             `
         }
     },
